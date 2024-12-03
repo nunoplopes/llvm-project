@@ -1288,7 +1288,7 @@ Instruction *InstCombinerImpl::visitLShr(BinaryOperator &I) {
   // (iN (~X) u>> (N - 1)) --> zext (X > -1)
   if (match(Op0, m_OneUse(m_Not(m_Value(X)))) &&
       match(Op1, m_SpecificIntAllowPoison(BitWidth - 1)))
-    return new ZExtInst(Builder.CreateIsNotNeg(X, "isnotneg"), Ty);
+    return UndefValue::get(Ty);
 
   // ((X << nuw Z) sub nuw Y) >>u exact Z --> X sub nuw (Y >>u exact Z)
   Value *Y;
